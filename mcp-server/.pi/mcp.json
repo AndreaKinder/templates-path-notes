@@ -1,0 +1,26 @@
+{
+  "mcpServers": {
+    "notes-rag-es": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--project",
+        "~/Projects/templates-path-notes/mcp-server",
+        "mcp-server-notes-es"
+      ],
+      "description": "Búsqueda semántica y gestión de notas diarias en español (vault ~/Notas).",
+      "exposure": "direct"
+    },
+    "notes-rag-en": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--project",
+        "~/Projects/templates-path-notes/mcp-server",
+        "mcp-server-notes-en"
+      ],
+      "description": "Semantic search and daily note management in English (vault ~/Notes).",
+      "exposure": "direct"
+    }
+  }
+}

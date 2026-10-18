@@ -1,0 +1,20 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mcp-notes-rag"
+version = "1.0.0"
+description = "MCP server for semantic RAG over personal notes vaults"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.12"
+authors = [{ name = "Andrea" }]
+dependencies = ["mcp>=1.0.0"]
+
+[project.scripts]
+mcp-server-notes-en = "notes_rag.server:main_en"
+mcp-server-notes-es = "notes_rag.server:main_es"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/notes_rag"]

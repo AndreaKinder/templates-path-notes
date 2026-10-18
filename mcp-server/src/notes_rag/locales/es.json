@@ -1,0 +1,75 @@
+{
+  "server_name": "notes-rag-es",
+  "server_description": "Búsqueda semántica + full-text sobre la bóveda de notas en español. Lee notas diarias, gestiona tareas e indexa notas.",
+  "tools": {
+    "query_notes": {
+      "description": "Búsqueda híbrida semántica + full-text sobre la bóveda de notas. Devuelve resultados ordenados fusionando similitud vectorial y búsqueda FTS5 vía RRF. Soporta filtrado por tipo de nota, etiqueta y rango de fechas."
+    },
+    "get_daily_note": {
+      "description": "Lee la nota diaria de una expresión de fecha (hoy, ayer, YYYY-MM-DD). Crea la nota desde plantilla si no existe."
+    },
+    "add_task": {
+      "description": "Añade una tarea '- [ ] tarea' a la nota diaria bajo una categoría específica (ej: 'Goalmed (Work)', 'Casa / Personal')."
+    },
+    "complete_task": {
+      "description": "Marca una tarea como completada [x] en la nota diaria buscando por texto de la tarea."
+    },
+    "get_note": {
+      "description": "Lee el contenido completo de una nota por su ruta relativa en la bóveda (ej: 'zettelkasten/ejemplo.md')."
+    },
+    "list_notes": {
+      "description": "Lista notas de un directorio o tipo (journal, zettelkasten, projects, finanzas, etc.)."
+    },
+    "index_vault": {
+      "description": "(Re)construye el índice semántico. Por defecto incremental (rápido). Usa full_rebuild=true para reconstrucción completa (se ejecuta en background)."
+    },
+    "index_status": {
+      "description": "Devuelve el estado del índice: notas indexadas, chunks, cambios pendientes y modelo de embeddings."
+    },
+    "create_zettel": {
+      "description": "Crea una nueva nota atómica Zettelkasten con frontmatter YAML obligatorio (title, tags, date)."
+    }
+  },
+  "errors": {
+    "vault_not_found": "Bóveda de notas no encontrada en {path}. Configura NOTES_VAULT_PATH.",
+    "ollama_unavailable": "No se puede conectar a Ollama en {url}. ¿Está ejecutándose? Prueba: ollama pull {model}",
+    "ollama_timeout": "La petición a Ollama ha superado {seconds}s.",
+    "note_not_found": "Nota no encontrada: {path}",
+    "daily_note_not_found": "Nota diaria del {date} no encontrada y no se pudo crear.",
+    "task_not_found": "No se encontró tarea pendiente que coincida con '{query}' en la nota diaria del {date}.",
+    "index_failed": "Fallo en indexación: {detail}",
+    "generic": "Error: {detail}"
+  },
+  "types": {
+    "journal": "journal",
+    "zettelkasten": "zettelkasten",
+    "projects": "projects",
+    "finance": "finanzas",
+    "todo": "todo",
+    "inbox": "inbox",
+    "templates": "templates",
+    "prompts": "prompts"
+  },
+  "stopwords": [
+    "el", "la", "los", "las", "un", "una", "unos", "unas", "del", "que", "con",
+    "para", "por", "en", "y", "o", "u", "al", "es", "son", "fue", "era", "lo",
+    "le", "les", "mi", "tu", "su", "se", "como", "cuando", "donde", "pero",
+    "mas", "muy", "este", "esta", "estos", "estas", "ese", "esa", "a", "de",
+    "ya", "todo", "todos", "toda", "todas", "algo", "alguien", "nadie", "nada",
+    "cada", "cual", "cuales", "quien", "quienes", "cuyo", "cuya", "cuyos", "cuyas",
+    "tal", "tales", " cualquier", "cualquiera", "bastante", "demasiado", "mucho",
+    "muchos", "muchas", "poco", "pocos", "poca", "pocas", "tanto", "tantos",
+    "tanta", "tantas", "sino", "siquiera", "ademas", "aun", "aunque", "bien",
+    "mal", "asi", "asi", "luego", "entonces", "aqui", "alli", "alla", "ahora",
+    "antes", "despues", "mientras", "durante", "mediante", "segun", "sobre",
+    "bajo", "entre", "hacia", "hasta", "desde", "sin", "contra", "ante",
+    "tras", "hace", "he", "ha", "han", "hemos", "habia", "habian", "hubo",
+    "ser", "estar", "tener", "hacer", "ir", "venir", "ver", "dar", "decir",
+    "poder", "querer", "saber", "pensar", "sentir", "llamar", "encontrar",
+    "tomar", "poner", "quedar", "pasar", "parecer", "hablar", "dejar", "seguir",
+    "llegar", "traer", "mirar", "volver", "creer", "contar", "perder", "salir",
+    "sacar", "tocar", "obtener", "recordar", "terminar", "empezar", "comenzar",
+    "ayudar", "usar", "utilizar", " necesitar", "deber"
+  ],
+  "daily_template": "---\nid: {date}\ndescription: \"\"\nevents: []\naliases:\n  - \"{date}\"\ntags:\n  - daily-notes\n---\n\n# {date}\n\n## TODO\n\n### Goalmed (Work)\n\n- [ ] \n\n### Casa / Personal\n\n- [ ] \n"
+}

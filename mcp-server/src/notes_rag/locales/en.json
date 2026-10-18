@@ -1,0 +1,70 @@
+{
+  "server_name": "notes-rag-en",
+  "server_description": "Semantic and full-text search over the English notes vault. Read daily notes, manage tasks, and index notes.",
+  "tools": {
+    "query_notes": {
+      "description": "Hybrid semantic + full-text search over the notes vault. Returns ranked results merging vector similarity and FTS5 keyword search via RRF. Supports filtering by note type, tag, and date range."
+    },
+    "get_daily_note": {
+      "description": "Read the daily note for a given date expression (today, yesterday, YYYY-MM-DD). Creates the note from template if it does not exist."
+    },
+    "add_task": {
+      "description": "Add a task checkbox '- [ ] task' to the daily note under a specified category (e.g., 'Work', 'Personal')."
+    },
+    "complete_task": {
+      "description": "Mark a task as completed [x] in the daily note by matching task text."
+    },
+    "get_note": {
+      "description": "Read the full content of a note by its relative vault path (e.g., 'zettelkasten/example.md')."
+    },
+    "list_notes": {
+      "description": "List notes within a directory or of a specific type (journal, zettelkasten, projects, finanzas, etc.)."
+    },
+    "index_vault": {
+      "description": "(Re)build the semantic search index. By default incremental (fast). Set full_rebuild=true for a complete rebuild (runs in background)."
+    },
+    "index_status": {
+      "description": "Return the current index status: notes indexed, chunks, pending changes, and embedding model."
+    },
+    "create_zettel": {
+      "description": "Create a new atomic Zettelkasten note with mandatory YAML frontmatter (title, tags, date)."
+    }
+  },
+  "errors": {
+    "vault_not_found": "Notes vault not found at {path}. Set NOTES_VAULT_PATH.",
+    "ollama_unavailable": "Cannot connect to Ollama at {url}. Is it running? Try: ollama pull {model}",
+    "ollama_timeout": "Ollama request timed out after {seconds}s.",
+    "note_not_found": "Note not found: {path}",
+    "daily_note_not_found": "Daily note for {date} not found and could not be created.",
+    "task_not_found": "No matching pending task found for '{query}' in daily note {date}.",
+    "index_failed": "Indexing failed: {detail}",
+    "generic": "Error: {detail}"
+  },
+  "types": {
+    "journal": "journal",
+    "zettelkasten": "zettelkasten",
+    "projects": "projects",
+    "finance": "finance",
+    "todo": "todo",
+    "inbox": "inbox",
+    "templates": "templates",
+    "prompts": "prompts"
+  },
+  "stopwords": [
+    "the", "a", "an", "is", "are", "was", "were", "be", "been", "being",
+    "have", "has", "had", "do", "does", "did", "will", "would", "shall",
+    "should", "may", "might", "can", "could", "must", "ought", "of", "to",
+    "in", "for", "on", "with", "at", "by", "from", "as", "into", "through",
+    "during", "before", "after", "above", "below", "between", "under",
+    "and", "but", "or", "yet", "so", "if", "because", "although", "though",
+    "while", "where", "when", "that", "which", "who", "whom", "whose",
+    "what", "this", "these", "those", "i", "you", "he", "she", "it", "we",
+    "they", "me", "him", "her", "us", "them", "my", "your", "his", "its",
+    "our", "their", "about", "also", "just", "only", "even", "very", "much",
+    "many", "more", "most", "some", "any", "no", "not", "than", "then",
+    "now", "here", "there", "all", "each", "every", "both", "few", "little",
+    "other", "another", "such", "own", "same", "so", "than", "too", "how",
+    "why", "up", "out", "off", "down", "over", "again", "further", "once"
+  ],
+  "daily_template": "---\nid: {date}\ndescription: \"\"\nevents: []\naliases:\n  - \"{date}\"\ntags:\n  - daily-notes\n---\n\n# {date}\n\n## TODO\n\n### Work\n\n- [ ] \n\n### Personal\n\n- [ ] \n"
+}
